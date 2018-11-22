@@ -22,10 +22,10 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/D780/Valparams.git"
+    "url": "https://github.com/D780/valparams.git"
   },
   "bugs": {
-    "url": "https://github.com/D780/Valparams/issues"
+    "url": "https://github.com/D780/valparams/issues"
   },
-  "homepage": "https://github.com/D780/Valparams"
+  "homepage": "https://github.com/D780/valparams"
 }
