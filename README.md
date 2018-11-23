@@ -1,6 +1,17 @@
 # Valparams
 web参数验证工具
 
+[![NPM](https://nodei.co/npm/valparams.png?downloads=true)](https://nodei.co/npm/valparams/)  
+
+[![NPM version](https://img.shields.io/npm/v/valparams.svg?style=flat-square)](https://npmjs.com/package/valparams)
+[![Build status](https://travis-ci.org/yunnysunny/validator-param.svg?branch=master)](https://travis-ci.org/yunnysunny/validator-param)
+
+## Install
+```npm i valparams --save```
+
+## How to use
+
+### The basic usage
 ```js
 const Valparams = require('valparams');
 Valparams.locale('zh-cn');
@@ -34,4 +45,14 @@ function list(req, res, next) {
 }
 ```
 
-复杂的使用详见 [wiki.md](https://github.com/D780/valparams/blob/master/wiki.md)
+## API
+
+See the [api](doc/api.md) document.
+
+## example use
+
+See the [wiki](doc/wiki.md) document.
+
+## License
+
+[ISC](LICENSE)

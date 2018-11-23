@@ -1,31 +1,37 @@
 {
-  "name": "valparams",
-  "version": "3.8.0",
-  "description": "web 参数验证工具",
-  "main": "index.js",
-  "directories": {
-    "lib": "lib"
-  },
-  "dependencies": {
-    "ajv": "^6.5.5",
-    "lodash": "^4.17.11",
-    "validator": "^10.9.0"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": {
-    "name": "780",
-    "email": "514591280@qq.com"
-  },
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/D780/valparams.git"
-  },
-  "bugs": {
-    "url": "https://github.com/D780/valparams/issues"
-  },
-  "homepage": "https://github.com/D780/valparams"
+    "name": "valparams",
+    "version": "3.8.1",
+    "description": "web 参数验证工具",
+    "main": "index.js",
+    "keywords": [
+        "valparams",
+        "parameter",
+        "validator",
+        "express"
+    ],
+    "directories": {
+        "lib": "lib"
+    },
+    "dependencies": {
+        "ajv": "^6.5.5",
+        "lodash": "^4.17.11",
+        "validator": "^10.9.0"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": {
+        "name": "780",
+        "email": "514591280@qq.com"
+    },
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/D780/valparams.git"
+    },
+    "bugs": {
+        "url": "https://github.com/D780/valparams/issues"
+    },
+    "homepage": "https://github.com/D780/valparams"
 }
