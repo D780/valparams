@@ -4,7 +4,6 @@ web参数验证工具
 [![NPM](https://nodei.co/npm/valparams.png?downloads=true)](https://nodei.co/npm/valparams/)  
 
 [![NPM version](https://img.shields.io/npm/v/valparams.svg?style=flat-square)](https://npmjs.com/package/valparams)
-[![Build status](https://travis-ci.org/yunnysunny/validator-param.svg?branch=master)](https://travis-ci.org/yunnysunny/validator-param)
 
 ## Install
 ```npm i valparams --save```
