@@ -54,4 +54,4 @@ See the [wiki](doc/wiki.md) document.
 
 ## License
 
-[ISC](LICENSE)
+[MIT](LICENSE)
