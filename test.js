@@ -63,7 +63,8 @@ function test(req, res, next) {
       p34: {type: 'int', trim: false, desc: '测试条件参数(cases)p34'},
       p35: {type: 'int', trim: false, desc: '测试条件参数(cases)p35'},
       p36: {type: 'int', trim: false, desc: '测试条件参数(cases)p36'},
-      p37: {type: 'int', trim: false, desc: '测试条件参数(cases)p37'}
+      p37: {type: 'int', trim: false, desc: '测试条件参数(cases)p37'},
+      p38: {type: 'array', trim: false, desc: '测试数组array参数'}
     },
     {
       // // 'p22', 'p23', 'p24' 三选二
@@ -129,7 +130,7 @@ test({
     p23: '66',
     p24: '77',
     p25: '15',
-    p26: '26'
+    p26: '26',
     // p27: '77'
     // p30:'2',
     // p31: '2',
@@ -139,6 +140,8 @@ test({
     // p35: '5'
     // p36:'2',
     // p37:'2'
+    // p38:['2','2444'],
+    p38:'2,2444'
   },
   body  : {}
 });

@@ -76,6 +76,7 @@ function list(req, res, next) {
 Valparams.vType = {
   ALL        : 'all',
   STRING     : 'string',
+  ARRAY      : 'array',
   DATE       : 'date',
   INT        : 'int',
   FLOAT      : 'float',

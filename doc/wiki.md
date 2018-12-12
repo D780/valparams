@@ -89,7 +89,8 @@ use case - [ supported type example ]
       p34: {type: 'int', trim: false, desc: '测试条件参数(cases)p34'},
       p35: {type: 'int', trim: false, desc: '测试条件参数(cases)p35'},
       p36: {type: 'int', trim: false, desc: '测试条件参数(cases)p36'},
-      p37: {type: 'int', trim: false, desc: '测试条件参数(cases)p37'}
+      p37: {type: 'int', trim: false, desc: '测试条件参数(cases)p37'},
+      p38: {type: 'array', trim: false, desc: '测试数组array参数'}
    }
 
    options = {
