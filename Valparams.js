@@ -49,19 +49,19 @@ module.exports = Valparams;
  * @type {Valparams}
  */
 function Valparams() {
-  this.query  = {};
-  this.body   = {};
+  this.query = {};
+  this.body = {};
   this.params = {};
-  this.all    = {};
-  this.raw    = {query: {}, body: {}, params: {}};
-  this.err    = null;
+  this.all = {};
+  this.raw = { query: {}, body: {}, params: {} };
+  this.err = null;
 }
 
 Valparams.defineLocale = Locales.defineLocale;
 Valparams.updateLocale = Locales.updateLocale;
-Valparams.locale       = Locales.getSetGlobalLocale;
-Valparams.localeData   = Locales.getLocale;
-Valparams.locales      = Locales.listLocales;
+Valparams.locale = Locales.getSetGlobalLocale;
+Valparams.localeData = Locales.getLocale;
+Valparams.locales = Locales.listLocales;
 
 // 默认用英文
 Valparams.locale('en');
@@ -81,44 +81,43 @@ Valparams.locale('en');
  * @param {String} params.pname.desc 参数描述 用于出错返回的提示
  * @param {Object} options [{choices:[{fields,count,force}],equals:[],compares:[]]
  */
-Valparams.prototype.setParams = function (req, params, options) {
+Valparams.prototype.setParams = function(req, params, options) {
   let validate = params;
   if (!validate) {
-    //都没有赋空
+    // 都没有赋空
     validate = {};
   }
-  const ret   = getparams.getValParams.bind(Valparams)({req: req, validate: validate, all: true, options});
-  this.query  = ret.ret.query;
-  this.body   = ret.ret.body;
+  const ret   = getparams.getValParams.bind(Valparams)({ req, validate, all: true, options });
+  this.query = ret.ret.query;
+  this.body = ret.ret.body;
   this.params = ret.ret.params;
-  this.all    = ret.ret.all;
-  this.raw    = ret.ret.raw;
-  this.err    = ret.err;
+  this.all = ret.ret.all;
+  this.raw = ret.ret.raw;
+  this.err = ret.err;
 };
 
-Valparams.setParams = function (req, params, options) {
+Valparams.setParams = function(req, params, options) {
   let validate = params;
   if (!validate) {
-    //都没有赋空
+    // 都没有赋空
     validate = {};
   }
-  return getparams.getValParams.bind(Valparams)({req: req, validate: validate, all: true, options});
+  return getparams.getValParams.bind(Valparams)({ req, validate, all: true, options });
 };
 
-Valparams.setParamsAsync = function (req, params, options) {
+Valparams.setParamsAsync = function(req, params, options) {
   let validate = params;
   if (!validate) {
-    //都没有赋空
+    // 都没有赋空
     validate = {};
   }
-  const ret = getparams.getValParams.bind(Valparams)({req: req, validate: validate, all: true, options});
-  return new Promise(function (resolve, reject) {
+  const ret = getparams.getValParams.bind(Valparams)({ req, validate, all: true, options });
+  return new Promise(function(resolve, reject) {
     if (ret.err) {
       return reject(ret.err);
     }
-    else {
-      return resolve(ret.ret);
-    }
+
+    return resolve(ret.ret);
   });
 };
 
