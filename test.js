@@ -2,7 +2,7 @@
 
 const Valparams = require('./index');
 // global.Valparams = Valparams;
-Valparams.locale('zh-cn');
+// Valparams.locale('zh-cn');
 // console.log(Valparams.locales());
 
 function test(req, res, next) {
@@ -64,11 +64,16 @@ function test(req, res, next) {
       p35: {type: 'int', trim: false, desc: '测试条件参数(cases)p35'},
       p36: {type: 'int', trim: false, desc: '测试条件参数(cases)p36'},
       p37: {type: 'int', trim: false, desc: '测试条件参数(cases)p37'},
-      p38: {type: 'array', trim: false, desc: '测试数组array参数'}
+      p38: {type: 'array', trim: false, desc: '测试数组array参数'},
+      p39: {type: 'int', trim: false, desc: '测试条件参数(cases-choice)p39'},
+      p40: {type: 'int', trim: false, desc: '测试条件参数(cases-choice)p40'},
+      p41: {type: 'int', trim: false, desc: '测试条件参数(cases-choice)p41'},
+      p42: {type: 'int', trim: false, desc: '测试条件参数(cases-choice)p42'},
+      p43: {type: 'int', trim: false, desc: '测试条件参数(cases-choice)p43'},
     },
     {
       // // 'p22', 'p23', 'p24' 三选二
-      choices : [{fields: ['p22', 'p23', 'p24'], count: 2, force: false}],
+      choices : [{fields: ['p22', 'p23', 'p24'], count: 2, force: true}],
       // 'p20', 'p21' 两个值需要相等
       equals  : [['p20', 'p21']],
       // 'p25', 'p26', 'p27' 必须符合 'p25' <= 'p26' <= 'p27'
@@ -83,10 +88,13 @@ function test(req, res, next) {
       // 当传了 p35 并且 p35=5 就必须传 p37
       cases: [
         {when: ['p30'], then: ['p31'], not: ['p32']},
-        {when: ['p32'], then: ['p33'], not: ['p30']},
+        // {when: ['p32'], then: ['p33'], not: ['p30']},
         {when: ['p34'], then: ['p35']},
         {when: ['p35'], not: ['p36']},
-        {when: [{field: 'p35', value: 5}], then: ['p37']}
+        {when: [{field: 'p35', value: 5}], then: ['p37']},
+        // cases-choice（就是在 then 里面允许使用 choice， m 选 n），choice 格式跟 choices 的项一致
+        // 但传了 p39='5' , 必须传 p43， p40 或 p41（二选一），不能传 p42
+        {when: [{field: 'p39', value: 5}], then: [{choice: {fields:['p40', 'p41'],count:1,force:false}}, 'p43'], not:['p42']}
       ]
     }
   );
@@ -141,7 +149,12 @@ test({
     // p36:'2',
     // p37:'2'
     // p38:['2','2444'],
-    p38:'2,2444'
+    p38:'2,2444',
+    p39:'5',
+    // p40:'5',
+    // p41:'5',
+    // p42:'5',
+    p43:'5',
   },
   body  : {}
 });

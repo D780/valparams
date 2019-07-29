@@ -26,8 +26,13 @@ module.exports = Valparams.defineLocale('en', {
         opt.when[idx] = `${whenField.field} = ${whenField.value}`;
       }
     });
+    _.map(opt.then, (thenField, idx) => {
+      if (typeof thenField === 'object') {
+        opt.then[idx] = `${thenField.total} ${thenField.force ? '' : 'at least '}choice ${thenField.count} parameter (from ${thenField.fields.join(',')})`;
+      }
+    });
     return _.template(
-      'when pass ${when.join("`,`")}, ${then.length?"must pass params: "+then.join("`,`"):""}${then.length&&not.length?",and ":""}${not.length?" cann\'t pass params: "+not.join("`,`"):""}')(
+      'when pass ${when.join("`,`")}, ${then.length?"must pass params: `"+then.join("`,`")+"`":""}${then.length&&not.length?", and":""}${not.length?" cann\'t pass params: `"+not.join("`,`")+"`":""}')(
       opt);
   },
 });
