@@ -18,12 +18,14 @@ function test(req, res, next) {
         range   : {
           schema: {
             type : 'array',
-            items: {type: 'number'}
-            // properties: {
-            //   a: {type: ['number', 'string']},
-            //   b: {type: ['number']}
-            // },
-            // required  : ['a']
+            items: {
+              type: 'object',
+              properties: {
+                a: {type: ['number']},
+                b: {type: ['number']}
+              },
+              required  : ['a']
+            }
           }
         },
         required: false,
@@ -109,7 +111,7 @@ function test(req, res, next) {
 test({
   params: {},
   query : {
-    p1 : '6',
+    p1 : 'd6',
     // p1: '1067886786718678667',
     // p1: '10000000000000000',
     // p2: 'dtgfrdgreg'
@@ -118,8 +120,9 @@ test({
     // 'p4>': '12',
     // 'p4<': ':5',
     // p5 : '{"ddd":1}',
-    // p5: '[33,"ghf",55]'
-    // p6: '112.80.248.190',
+    // p5: '[33,"ghf",55]',
+    p5: '[{"a":33},{"b":"ghf"},{"a":"55"}]',
+    // p6: '112.80.248.190'
     // p7: '1515151515221',
     // // p7   : '1399335400000',
     // // // p7   : '1515110400000',
@@ -161,7 +164,7 @@ test({
 
 
 // async function test2(req, res, next) {
-//   return Valparams.setParamsAsync(req, {
+//   return Valparams.setParamsAsync(req, { 
 //       p1: {type: 'int', range: {min: 5, max: 9}, desc: '测试类型int'}
 //     })
 //     .then((ret) => {
