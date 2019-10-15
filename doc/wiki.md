@@ -1,13 +1,12 @@
 
+# example use
 
-example use
----
 ```js
 // 可以全局定义
 const Valparams = require('path/to/Valparams[/index]');
 Valparams.locale('zh-cn');
 
-function list(req, res, next) { 
+function list(req, res, next) {
   let validater = Valparams.setParams(req, {
     sysID : {alias:'sid',type: 'int', required: true, desc: '所属系统id'},
     page  : {type: 'int', required: false, defValue: 1,range:{min:0}, desc: '页码'},
@@ -34,10 +33,12 @@ function list(req, res, next) {
     //do something
   }
 }
-````
+```
+
 ---
-validater.setParams 
+validater.setParams
 use case - [ supported type example ]
+
 ```js
    params = {
       p1 : {type: 'int', range: {min: 5, max: 9}/*,allowEmptyStr: true, required: true*/},      p2 : {type: 'string', desc: '测试类型string'},
@@ -96,9 +97,9 @@ use case - [ supported type example ]
    options = {
       choices : [
         // 'p22', 'p23', 'p24' 三选二[以上]
-        {fields: ['p22', 'p23', 'p24'], count: 2, force: false},        
+        {fields: ['p22', 'p23', 'p24'], count: 2, force: false},
         // 'p22', 'p23', 'p24' 三选一
-        {fields: ['p22', 'p23', 'p24'], force: true},             
+        {fields: ['p22', 'p23', 'p24'], force: true},
         // 'p22', 'p23' 二选一
         ['p22', 'p23']
       ],
@@ -106,7 +107,7 @@ use case - [ supported type example ]
       equals  : [['p20', 'p21']],
       // 'p25', 'p26', 'p27' 必须符合 'p25' <= 'p26' <= 'p27'
       compares: [['p25', 'p26', 'p27']],
-      
+
       // 使用这个控制时候，相应的参数最好不要设置required属性
       // 这里关系分别表示
       // 当传了 p30 就必须传 p31 ,不能传p32
@@ -124,8 +125,9 @@ use case - [ supported type example ]
    }
 ```
 
-`json` `参数 `schema` 限制 使用 `ajv`
+`json` 参数 `schema` 限制 使用 `ajv`
 在线测试地址 `https://jsonschemalint.com/`
+
 ```js
 // 一个较为详细的例子
 schema = {
@@ -183,11 +185,12 @@ schema = {
   ]
 }
 ```
-`type` 常见取值有 `object` | `array` | `integer` | `number` | `null` | `boolean` | `string` 
+
+`type` 常见取值有 `object` | `array` | `integer` | `number` | `null` | `boolean` | `string`
 
 （1）当 `type` 取值为`object`时，涉及的常用关键字：
 > `properties`
->> 该关键字的值是一个对象。   
+>> 该关键字的值是一个对象。
 >> 用于指定 `JSON` 对象中的各种不同key应该满足的校验逻辑，如果待校验 `JSON` 对象中所有值都能够通过该关键字值中定义的对应key的校验逻辑，每个key对应的值，都是一个 `JSON Schema` ，则待校验 `JSON` 对象通过校验。从这里，我们可以看到，只要待校验 `JSON` 对象的所有key分别都通过对应的 `JSON Schema` 的校验检测，这个对象才算是通过校验。
 > ---
 > `required`
@@ -195,7 +198,7 @@ schema = {
 >> 该关键字限制了 `JSON` 对象中必须包含哪些一级key。如果一个 `JSON` 对象中含有 `required` 关键字所指定的所有一级key，则该 `JSON` 对象能够通过校验。
 > ---
 > `minProperties` 、`maxProperties`
->> 这两个关键字的值都是非负整数。   
+>> 这两个关键字的值都是非负整数。
 >> 指定了待校验 `JSON` 对象中一级key的个数限制， `minProperties` 指定了待校验 `JSON` 对象可以接受的最少一级key的个数，而 `maxProperties` 指定了待校验 `JSON` 对象可以接受的最多一级key的个数。
 >> 另外，需要注意的是，省略 `minProperties` 关键字和该关键字的值为0，具有相同效果。而，如果省略 `maxProperties` 关键字则表示对一级key的最大个数没有限制。
 
@@ -276,4 +279,3 @@ schema = {
 > 需要特别注意的是，`type` 关键字的值可以是一个 `string`，也可以是一个数组。  
 > 如果 `type` 的值是一个 `string`，则其值只能是以下几种：`null`、`boolean`、`object`、`array`、`number`、`string`、`integer`。  
 > 如果 `type` 的值是一个数组，则数组中的元素都必须是 `string`，且其取值依旧被限定为以上几种。只要带校验JSON元素是其中的一种，则通过校验。
-
