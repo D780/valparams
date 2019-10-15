@@ -72,7 +72,7 @@ Valparams.locale('en');
 /**
  * setParams
  *
- * 下面参数说明说明中 `panme` 是键，`panme_XXX` 是值
+ * 下面参数说明说明中 `panme` 是键，`panme_XXX` 是对象值的对应的字段 `XXX`
  *
  * @param {Object} req
  * @param {Object} params { pname: {alias, type, required, range: {in, min, max, reg, schema }, defValue, trim, allowEmptyStr, desc[, detail] } }
@@ -123,7 +123,7 @@ Valparams.prototype.setParams = function(req, params, options) {
 /**
  * static setParams
  *
- * 下面参数说明说明中 `panme` 是键，`panme_XXX` 是值
+ * 下面参数说明说明中 `panme` 是键，`panme_XXX` 是对象值的对应的字段 `XXX`
  *
  * @param {Object} req
  * @param {Object} params { pname: {alias, type, required, range: {in, min, max, reg, schema }, defValue, trim, allowEmptyStr, desc[, detail] } }
@@ -171,7 +171,7 @@ Valparams.setParams = function(req, params, options) {
 /**
  * static setParamsAsync
  *
- * 下面参数说明说明中 `panme` 是键，`panme_XXX` 是值
+ * 下面参数说明说明中 `panme` 是键，`panme_XXX` 是对象值的对应的字段 `XXX`
  *
  * @param {Object} req
  * @param {Object} params { pname: {alias, type, required, range: {in, min, max, reg, schema }, defValue, trim, allowEmptyStr, desc[, detail] } }
