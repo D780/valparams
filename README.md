@@ -11,11 +11,12 @@ web参数验证工具
 ## How to use
 
 ### The basic usage
+
 ```js
 const Valparams = require('valparams');
 Valparams.locale('zh-cn');
 
-function list(req, res, next) { 
+function list(req, res, next) {
   let validater = Valparams.setParams(req, {
     sysID : {alias:'sid',type: 'int', required: true, desc: '所属系统id'},
     page  : {type: 'int', required: false, defValue: 1,range:{min:0}, desc: '页码'},
