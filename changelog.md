@@ -1,5 +1,11 @@
 # 更新记录
 
+## 3.9.0
+>
+> [`lib/getparams`]  `3.7.1` -> `3.8.0`
+> 参数配置增加 allowNull 的支持，开启时 传递 x=null 或 x='null' 时，可以跳过类型检查，将 null 值直接赋予 x 参数
+> 此举可以在 POST PUT 之类的接口传入 null 参数把数据库记录的值设置为 null，或获取记录时候筛选 某值为 null 的记录
+
 ## 3.8.12
 >
 > 修正完善一些注释文档及更新 index.d.ts
@@ -69,7 +75,7 @@
 
 ## 3.1.4
 >
-> [`lib/getparams`]  `3.1.1` -> `3.1.2` `value` 允许为 `null`, 取消不能为空串的限制,增加`BOOL` 类型的转换
+> [`lib/getparams`]  `3.1.1` -> `3.1.2` `value` 允许为 `null`, 取消不能为空串的限制,增加 `BOOL` 类型的转换
 > [`lib/type`]  `1.0.2` -> `1.0.3` 增加 `phone` 和 `bool` 两种类型
 > [`lib/validators`]  `2.0.2` -> `2.0.3` 增加 `phone` 和 `bool` 两种类型支持,修复仅设置 `min` 时, `isLength` 参数 `max` 的处理问题 `null` -> `undefined`
 

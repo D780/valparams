@@ -50,7 +50,7 @@ declare class Valparams {
    *
    * @param {Object} req
    * @param {Object.<string, {alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
-   *                defValue, trim:boolean, allowEmptyStr:boolean, desc:string}>} params 参数配置  {@link ParamsObj}
+   *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, desc:string}>} params 参数配置  {@link ParamsObj}
    * @param {Object}  options 参数之间关系配置
    * @param {Object[]} options.choices 参数挑选规则 | [{fields: ['p22', 'p23', 'p24'], count: 2, force: true}] 表示'p22', 'p23', 'p24' 参数三选二
    * @param {string[]} options.choices[].fields 涉及的参数
@@ -75,7 +75,7 @@ declare class Valparams {
    *
    * @param {Object} req
    * @param {Object.<string, {alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
-   *                defValue, trim:boolean, allowEmptyStr:boolean, desc:string}>} params 参数配置  {@link ParamsObj}
+   *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, desc:string}>} params 参数配置  {@link ParamsObj}
    * @param {Object}  options 参数之间关系配置
    * @param {Object[]} options.choices 参数挑选规则 | [{fields: ['p22', 'p23', 'p24'], count: 2, force: true}] 表示'p22', 'p23', 'p24' 参数三选二
    * @param {string[]} options.choices[].fields 涉及的参数
@@ -119,7 +119,8 @@ declare namespace _Valparams {
    * @param {Object}  [range.schema] jsonSchema，针对JSON类型参数有效，使用ajv对参数进行格式控制
    * @param {*}       [defValue] 默认值，没传参数或参数验证出错时生效，此时会将该值赋值到相应参数上
    * @param {boolean} [trim]          是否去掉参数前后空格字符，默认false
-   * @param {boolean} [allowEmptyStr] 是否允许空串变量 默认不允许， 即 XXXX?YYY= 这种路由 YYY这个参数是否接受，默
+   * @param {boolean} [allowEmptyStr] 是否允许空串变量 默认不允许， 即 XXXX?YYY= 这种路由 YYY这个参数是否接受
+   * @param {boolean} [allowNull] 是否允许 Null 值变量 默认不允许，开启时 传递 x=null 或 x='null' 时，可以跳过类型检查，将 null 值直接赋予 x 参数
    * @param {string}  [desc] 参数描述 用于出错返回的提示
    */
   export interface TParamConfig {
@@ -137,6 +138,7 @@ declare namespace _Valparams {
       defValue?: any;
       trim?: boolean;
       allowEmptyStr?: boolean;
+      allowNull?: boolean;
       desc?: string;
     };
   }

@@ -10,7 +10,7 @@ function test(req, res, next) {
   let validater = Valparams.setParams(req,
     {
       p1 : {type: 'int', range: {min: 5}/*,allowEmptyStr: true, required: true*/},
-      p2 : {type: 'string', range: {max: 5}, desc: '测试类型string'/*,  required: true*/},
+      p2 : {type: 'string', range: {max: 5}, allowEmptyStr: true, trim:true, desc: '测试类型string'/*,  required: true*/},
       p3 : {type: 'string', desc: '测试类型Arr'},
       p4 : {type: 'numberRange', desc: '测试范围参数'},
       p5 : {
@@ -111,17 +111,17 @@ function test(req, res, next) {
 test({
   params: {},
   query : {
-    p1 : 'd6',
+    // p1 : null,
     // p1: '1067886786718678667',
     // p1: '10000000000000000',
-    // p2: 'dtgfrdgreg'
+    p2:null,
     // p3Arr: '233',
     // p4: '2',
     // 'p4>': '12',
     // 'p4<': ':5',
     // p5 : '{"ddd":1}',
     // p5: '[33,"ghf",55]',
-    p5: '[{"a":33},{"b":"ghf"},{"a":"55"}]',
+    // p5: '[{"a":33},{"b":"ghf"},{"a":"55"}]',
     // p6: '112.80.248.190'
     // p7: '1515151515221',
     // // p7   : '1399335400000',
@@ -154,7 +154,7 @@ test({
     // p38:['2','2444'],
     p38:'2,2444',
     p39:'5',
-    // p40:'5',
+    p40:'5',
     // p41:'5',
     // p42:'5',
     p43:'5',
