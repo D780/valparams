@@ -1,6 +1,6 @@
 {
     "name": "valparams",
-    "version": "3.9.0",
+    "version": "3.10.0",
     "description": "web 参数验证工具",
     "main": "index.js",
     "keywords": [
