@@ -198,6 +198,7 @@ declare namespace _Valparams {
     URL: string;
     JSON: string;
     BOOL: string;
+    BOOLEAN: string;
     NULL: string;
   }
 }
