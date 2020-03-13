@@ -1,5 +1,12 @@
 # 更新记录
 
+## 3.13.0
+>
+> `cookies` 增加 `signed` 的区分， 即分为 `cookies` 和 `signedCookies`
+> 参数规则定义增加 `signed` 为 `cookies` 指定是否为已签名 `cookies`
+> 特别地，`{ from: 'cookies', signed: true }` 等价于 `{ from: 'signedCookies' }`
+> 
+
 ## 3.12.0
 >
 > 增加 `headers`、`cookies` 的验证  

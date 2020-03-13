@@ -55,8 +55,9 @@ declare class Valparams {
    * @param {Object} [req.body]    body
    * @param {Object} [req.headers] headers
    * @param {Object} [req.cookies] cookies
+   * @param {Object} [req.signedCookies] signedCookies
    * @param {Object.<string, {from:string, alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
-   *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, desc:string}>} params 参数配置
+   *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, signed:boolean, desc:string}>} params 参数配置
    * @param {Object}  options 参数之间关系配置
    * @param {Object[]} options.choices 参数挑选规则 | [{fields: ['p22', 'p23', 'p24'], count: 2, force: true}] 表示'p22', 'p23', 'p24' 参数三选二
    * @param {string[]} options.choices[].fields 涉及的参数
@@ -72,8 +73,8 @@ declare class Valparams {
    * @param {string[]} options.cases.then 符合 when 条件时，需要必传的参数
    * @param {string[]} options.cases.not  符合 when 条件时，不能接收的参数
    *
-   * @returns {{ err: { type:string, err:string[] }, ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, all:Object,
-   *                                                          raw: { query:Object, body:Object, params:Object, headers:Object, cookies:Object, all:Object } } }}
+   * @returns {{ err: { type:string, err:string[] }, ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object,
+   *                                                          raw: { query:Object, body:Object, params:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object } } }}
    */
   static setParams(req: _Valparams.TRequest, params: _Valparams.TParamConfig, options: _Valparams.TRelationOptions): _Valparams.TResult;
   /**
@@ -86,8 +87,9 @@ declare class Valparams {
    * @param {Object} [req.body]    body
    * @param {Object} [req.headers] headers
    * @param {Object} [req.cookies] cookies
+   * @param {Object} [req.signedCookies] signedCookies
    * @param {Object.<string, {from:string, alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
-   *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, desc:string}>} params 参数配置
+   *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, signed:boolean, desc:string}>} params 参数配置
    * @param {Object}  options 参数之间关系配置
    * @param {Object[]} options.choices 参数挑选规则 | [{fields: ['p22', 'p23', 'p24'], count: 2, force: true}] 表示'p22', 'p23', 'p24' 参数三选二
    * @param {string[]} options.choices[].fields 涉及的参数
@@ -103,8 +105,8 @@ declare class Valparams {
    * @param {string[]} options.cases.then 符合 when 条件时，需要必传的参数
    * @param {string[]} options.cases.not  符合 when 条件时，不能接收的参数
    *
-   * @returns {{ err: { type:string, err:string[] }, ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, all:Object,
-   *                                                          raw: { query:Object, body:Object, params:Object, headers:Object, cookies:Object, all:Object } } }}
+   * @returns {{ err: { type:string, err:string[] }, ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object,
+   *                                                          raw: { query:Object, body:Object, params:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object } } }}
    */
   static setParamsAsync(req: _Valparams.TRequest, params: _Valparams.TParamConfig, options: _Valparams.TRelationOptions): _Valparams.TResult;
   static vType: _Valparams.TVType;
@@ -113,6 +115,7 @@ declare class Valparams {
   params: any;
   headers: any;
   cookies: any;
+  signedCookies: any;
   all: any;
   raw: any;
   err: any;
@@ -128,6 +131,7 @@ declare namespace _Valparams {
    * @param {Object} [body]    body
    * @param {Object} [headers] headers
    * @param {Object} [cookies] cookies
+   * @param {Object} [signedCookies] signedCookies
    */
   export interface TRequest {
     method: string;
@@ -136,11 +140,12 @@ declare namespace _Valparams {
     body?: any;
     headers?: any;
     cookies?: any;
+    signedCookies?: any;
   }
   /**
    * TParamsConfig
    * 
-   * @param {'headers'|'cookies'|'params'|'query'|'body'}  [from] 来源，如果存在 alias | key 同名的情况下，需要用该参数来确定区别来源
+   * @param {'headers'|'cookies'|'signedCookies'|'params'|'query'|'body'}  [from] 来源，如果存在 alias | key 同名的情况下，需要用该参数来确定区别来源
    * @param {string}  [alias] 参数别名，定义该值，前端就用该值传参数来而不是pname
    * @param {string}  type    参数类型
    * @param {boolean} [required] 参数是否必选
@@ -154,11 +159,12 @@ declare namespace _Valparams {
    * @param {boolean} [trim]          是否去掉参数前后空格字符，默认false
    * @param {boolean} [allowEmptyStr] 是否允许空串变量 默认不允许， 即 XXXX?YYY= 这种路由 YYY这个参数是否接受
    * @param {boolean} [allowNull] 是否允许 Null 值变量 默认不允许，开启时 传递 x=null 或 x='null' 时，可以跳过类型检查，将 null 值直接赋予 x 参数
+   * @param {boolean} [signed] from=cookies 用，cookie 是否已签名加密，此时也等价于 from=signedCookies
    * @param {string}  [desc] 参数描述 用于出错返回的提示
    */
   export interface TParamConfig {
     [key: string]: {
-      from?: 'headers'|'cookies'|'params'|'query'|'body';
+      from?: 'headers' | 'cookies' | 'signedCookies' | 'params' | 'query' | 'body';
       alias?: string;
       type: string;
       required?: boolean;
@@ -173,6 +179,7 @@ declare namespace _Valparams {
       trim?: boolean;
       allowEmptyStr?: boolean;
       allowNull?: boolean;
+      signed?: boolean;
       desc?: string;
     };
   }
@@ -206,6 +213,7 @@ declare namespace _Valparams {
     params: any;
     headers: any;
     cookies: any;
+    signedCookies: any;
     all: any;
   }
   export interface TValparams {
@@ -214,6 +222,7 @@ declare namespace _Valparams {
     body: any;
     headers: any;
     cookies: any;
+    signedCookies: any;
     all: any;
     raw: _Valparams.TRawparams;
   }

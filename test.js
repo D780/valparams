@@ -9,7 +9,7 @@ function test(req, res, next) {
   // console.log(Valparams.localeData())
   let validater = Valparams.setParams(req,
     {
-      p1 : {from:'headers',type: 'int', range: {min: 5}, defValue: 4,/*,allowEmptyStr: true, required: true*/},
+      p1 : {type: 'int', range: {min: 5}, defValue: 4,/*,allowEmptyStr: true, required: true*/},
       p2 : {type: 'string', range: {max: 5}, allowEmptyStr: true, trim:true, desc: '测试类型string'/*,  required: true*/},
       p3 : {type: 'string', desc: '测试类型Arr'},
       p4 : {alias:'p4alias',type: 'numberRange', desc: '测试范围参数'},
@@ -74,6 +74,8 @@ function test(req, res, next) {
       p43: {from: 'body', type: 'int', trim: false, desc: '测试条件参数(cases-choice)p43'},
 
       'x-csrf-token' : {from:'cookies', type: 'string', trim: false, desc: '测试cookies'},
+      'signedkey1' : {from:'cookies', signed:true, type: 'string', trim: false, desc: '测试 signed cookies'},
+      'signedkey2' : {from:'signedCookies', type: 'string', trim: false, desc: '测试signedCookies'},
     },
     {
       // // 'p22', 'p23', 'p24' 三选二
@@ -170,6 +172,10 @@ test({
   },
   cookies:{
     'x-csrf-token': 'XXXXX'
+  },
+  signedCookies:{
+    'signedkey1': 'signedkeysignedkey1',
+    'signedkey2': 'signedkeysignedkey2',
   }
 });
 
