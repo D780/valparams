@@ -9,10 +9,10 @@ function test(req, res, next) {
   // console.log(Valparams.localeData())
   let validater = Valparams.setParams(req,
     {
-      p1 : {type: 'int', range: {min: 5}/*,allowEmptyStr: true, required: true*/},
+      p1 : {from:'headers',type: 'int', range: {min: 5}, defValue: 4,/*,allowEmptyStr: true, required: true*/},
       p2 : {type: 'string', range: {max: 5}, allowEmptyStr: true, trim:true, desc: '测试类型string'/*,  required: true*/},
       p3 : {type: 'string', desc: '测试类型Arr'},
-      p4 : {type: 'numberRange', desc: '测试范围参数'},
+      p4 : {alias:'p4alias',type: 'numberRange', desc: '测试范围参数'},
       p5 : {
         type    : 'json',
         range   : {
@@ -71,7 +71,9 @@ function test(req, res, next) {
       p40: {type: 'int', trim: false, desc: '测试条件参数(cases-choice)p40'},
       p41: {type: 'int', trim: false, desc: '测试条件参数(cases-choice)p41'},
       p42: {type: 'int', trim: false, desc: '测试条件参数(cases-choice)p42'},
-      p43: {type: 'int', trim: false, desc: '测试条件参数(cases-choice)p43'},
+      p43: {from: 'body', type: 'int', trim: false, desc: '测试条件参数(cases-choice)p43'},
+
+      'x-csrf-token' : {from:'cookies', type: 'string', trim: false, desc: '测试cookies'},
     },
     {
       // // 'p22', 'p23', 'p24' 三选二
@@ -109,6 +111,7 @@ function test(req, res, next) {
 }
 
 test({
+  method:'POST',
   params: {},
   query : {
     // p1 : null,
@@ -117,10 +120,12 @@ test({
     p2:null,
     // p3Arr: '233',
     // p4: '2',
-    // 'p4>': '12',
-    // 'p4<': ':5',
+    'p4>': '12',
+    'p4<': ':55',
+    'p4alias>': '10',
+    'p4alias<': ':59',
     // p5 : '[{"ddd":1,"ao":1}]',
-    p5 :  [ { ddd: 1, a1: 11 } ],
+    p5 :  [ { a:5,ddd: 1, a1: 11 } ],
     // p5: '[33,"ghf",55]',
     // p5: '[{"a":33},{"b":"ghf"},{"a":"55"}]',
     // p6: '112.80.248.190',
@@ -145,8 +150,8 @@ test({
     p25: '15',
     p26: '26',
     // p27: '77'
-    // p30:'2',
-    // p31: '2',
+    p30:'2',
+    p31: '2',
     // p32: '2',
     // p33: '2',
     // // p34:'2',
@@ -158,16 +163,23 @@ test({
     p40:'5',
     // p41:'5',
     // p42:'5',
-    p43:'5',
   },
-  body  : {}
+  body  : {
+    p17  : '  233  ',
+    p43:'5'
+  },
+  cookies:{
+    'x-csrf-token': 'XXXXX'
+  }
 });
 
+//  ===============================
 
 // async function test2(req, res, next) {
-//   return Valparams.setParamsAsync(req, { 
-//       p1: {type: 'int', range: {min: 5, max: 9}, desc: '测试类型int'}
-//     })
+//   return Valparams.setParamsAsync(req, [
+//       {key:'q1', from:'body', type: 'int', desc: ''},
+//       {key:'q1', type: 'string', desc: ''},
+//     ])
 //     .then((ret) => {
 //       console.log(ret);
 //     })
@@ -175,11 +187,17 @@ test({
 //       console.error(err);
 //     });
 // }
-//
+
 // test2({
+//   method:'GET',
 //   params: {},
 //   query : {
-//     p1: '8',
+//     q1:'testquery',
 //   },
-//   body  : {}
+//   body  : {
+//     q1:'222',
+//   },
+//   cookies:{
+//     'x-csrf-token': 'XXXXX'
+//   }
 // });

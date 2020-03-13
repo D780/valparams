@@ -44,8 +44,8 @@ module.exports = Valparams.defineLocale('zh-cn', {
     opt.then = opt.then || [];
     opt.not = opt.not || [];
     _.map(opt.when, (whenField, idx) => {
-      if (typeof whenField === 'string') {
-        whenField = { field: whenField };
+      if (typeof whenField === 'string' || _.isUndefined(whenField.value)) {
+        opt.when[idx] = `${whenField.field}` || `${whenField}`;
       } else {
         opt.when[idx] = `${whenField.field} = ${whenField.value}`;
       }

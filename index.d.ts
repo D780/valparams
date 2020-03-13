@@ -49,8 +49,14 @@ declare class Valparams {
    * static setParams
    *
    * @param {Object} req
-   * @param {Object.<string, {alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
-   *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, desc:string}>} params 参数配置  {@link ParamsObj}
+   * @param {string} [req.method='GET'] 请求方法
+   * @param {Object} [req.params]  params
+   * @param {Object} [req.query]   query
+   * @param {Object} [req.body]    body
+   * @param {Object} [req.headers] headers
+   * @param {Object} [req.cookies] cookies
+   * @param {Object.<string, {from:string, alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
+   *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, desc:string}>} params 参数配置
    * @param {Object}  options 参数之间关系配置
    * @param {Object[]} options.choices 参数挑选规则 | [{fields: ['p22', 'p23', 'p24'], count: 2, force: true}] 表示'p22', 'p23', 'p24' 参数三选二
    * @param {string[]} options.choices[].fields 涉及的参数
@@ -66,16 +72,22 @@ declare class Valparams {
    * @param {string[]} options.cases.then 符合 when 条件时，需要必传的参数
    * @param {string[]} options.cases.not  符合 when 条件时，不能接收的参数
    *
-   * @returns {{ err: { type: string, err: string[] }, ret: { params: Object, query: Object, body: Object, query: Object, all: Object,
-   *                                                          raw: { query: Object, body: Object, params: Object, all: Object } } }}
+   * @returns {{ err: { type:string, err:string[] }, ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, all:Object,
+   *                                                          raw: { query:Object, body:Object, params:Object, headers:Object, cookies:Object, all:Object } } }}
    */
-  static setParams(req: any, params: _Valparams.TParamConfig, options: _Valparams.TRelationOptions): _Valparams.TResult;
+  static setParams(req: _Valparams.TRequest, params: _Valparams.TParamConfig, options: _Valparams.TRelationOptions): _Valparams.TResult;
   /**
    * static setParamsAsync
    *
    * @param {Object} req
-   * @param {Object.<string, {alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
-   *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, desc:string}>} params 参数配置  {@link ParamsObj}
+   * @param {string} [req.method='GET'] 请求方法
+   * @param {Object} [req.params]  params
+   * @param {Object} [req.query]   query
+   * @param {Object} [req.body]    body
+   * @param {Object} [req.headers] headers
+   * @param {Object} [req.cookies] cookies
+   * @param {Object.<string, {from:string, alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
+   *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, desc:string}>} params 参数配置
    * @param {Object}  options 参数之间关系配置
    * @param {Object[]} options.choices 参数挑选规则 | [{fields: ['p22', 'p23', 'p24'], count: 2, force: true}] 表示'p22', 'p23', 'p24' 参数三选二
    * @param {string[]} options.choices[].fields 涉及的参数
@@ -91,14 +103,16 @@ declare class Valparams {
    * @param {string[]} options.cases.then 符合 when 条件时，需要必传的参数
    * @param {string[]} options.cases.not  符合 when 条件时，不能接收的参数
    *
-   * @returns {{ err: { type: string, err: string[] }, ret: { params: Object, query: Object, body: Object, query: Object, all: Object,
-   *                                                          raw: { query: Object, body: Object, params: Object, all: Object } } }}
+   * @returns {{ err: { type:string, err:string[] }, ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, all:Object,
+   *                                                          raw: { query:Object, body:Object, params:Object, headers:Object, cookies:Object, all:Object } } }}
    */
-  static setParamsAsync(req: any, params: _Valparams.TParamConfig, options: _Valparams.TRelationOptions): _Valparams.TResult;
+  static setParamsAsync(req: _Valparams.TRequest, params: _Valparams.TParamConfig, options: _Valparams.TRelationOptions): _Valparams.TResult;
   static vType: _Valparams.TVType;
   query: any;
   body: any;
   params: any;
+  headers: any;
+  cookies: any;
   all: any;
   raw: any;
   err: any;
@@ -106,8 +120,27 @@ declare class Valparams {
 declare const _Valparams: typeof Valparams;
 declare namespace _Valparams {
   /**
+   * TRequest
+   * 
+   * @param {string} [method='GET'] 请求方法
+   * @param {Object} [params]  params
+   * @param {Object} [query]   query
+   * @param {Object} [body]    body
+   * @param {Object} [headers] headers
+   * @param {Object} [cookies] cookies
+   */
+  export interface TRequest {
+    method: string;
+    params?: any;
+    query?: any;
+    body?: any;
+    headers?: any;
+    cookies?: any;
+  }
+  /**
    * TParamsConfig
    * 
+   * @param {'headers'|'cookies'|'params'|'query'|'body'}  [from] 来源，如果存在 alias | key 同名的情况下，需要用该参数来确定区别来源
    * @param {string}  [alias] 参数别名，定义该值，前端就用该值传参数来而不是pname
    * @param {string}  type    参数类型
    * @param {boolean} [required] 参数是否必选
@@ -125,6 +158,7 @@ declare namespace _Valparams {
    */
   export interface TParamConfig {
     [key: string]: {
+      from?: 'headers'|'cookies'|'params'|'query'|'body';
       alias?: string;
       type: string;
       required?: boolean;
@@ -170,12 +204,16 @@ declare namespace _Valparams {
     query: any;
     body: any;
     params: any;
+    headers: any;
+    cookies: any;
     all: any;
   }
   export interface TValparams {
     params: any;
     query: any;
     body: any;
+    headers: any;
+    cookies: any;
     all: any;
     raw: _Valparams.TRawparams;
   }

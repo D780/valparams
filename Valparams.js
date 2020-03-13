@@ -55,8 +55,10 @@ function Valparams() {
   this.query = {};
   this.body = {};
   this.params = {};
+  this.headers = {};
+  this.cookies = {};
   this.all = {};
-  this.raw = { query: {}, body: {}, params: {} };
+  this.raw = { query: {}, body: {}, params: {}, headers: {}, cookies: {}, all: {} };
   this.err = null;
 }
 
@@ -72,6 +74,7 @@ Valparams.locale('en');
 /**
  * @typedef ParamsConfig
  * @type {Object}
+ * @property {'headers'|'cookies'|'params'|'query'|'body'}  [from] 来源，如果存在 alias | key 同名的情况下，需要用该参数来确定区别来源
  * @property {string}  [alias] 参数别名，定义该值，前端就用该值传参数来而不是pname
  * @property {string}  type    参数类型
  * @property {boolean} [required] 参数是否必选
@@ -92,7 +95,13 @@ Valparams.locale('en');
  * setParams
  *
  * @param {Object} req
- * @param {Object.<string, {alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
+ * @param {string} req.method 请求方法
+ * @param {Object} [req.params]  params
+ * @param {Object} [req.query]   query
+ * @param {Object} [req.body]    body
+ * @param {Object} [req.headers] headers
+ * @param {Object} [req.cookies] cookies
+ * @param {Object.<string, {from:string, alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
  *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, desc:string}>} params 参数配置  {@link ParamsConfig}
  * @param {Object}  options 参数之间关系配置
  * @param {Object[]} options.choices 参数挑选规则 | [{fields: ['p22', 'p23', 'p24'], count: 2, force: true}] 表示'p22', 'p23', 'p24' 参数三选二
@@ -119,6 +128,8 @@ Valparams.prototype.setParams = function(req, params, options) {
   this.query = ret.ret.query;
   this.body = ret.ret.body;
   this.params = ret.ret.params;
+  this.headers = ret.ret.headers;
+  this.cookies = ret.ret.cookies;
   this.all = ret.ret.all;
   this.raw = ret.ret.raw;
   this.err = ret.err;
@@ -128,7 +139,13 @@ Valparams.prototype.setParams = function(req, params, options) {
  * static setParams
  *
  * @param {Object} req
- * @param {Object.<string, {alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
+ * @param {string} req.method 请求方法
+ * @param {Object} [req.params]  params
+ * @param {Object} [req.query]   query
+ * @param {Object} [req.body]    body
+ * @param {Object} [req.headers] headers
+ * @param {Object} [req.cookies] cookies
+ * @param {Object.<string, {from:string, alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
  *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, desc:string}>} params 参数配置  {@link ParamsConfig}
  * @param {Object}  options 参数之间关系配置
  * @param {Object[]} options.choices 参数挑选规则 | [{fields: ['p22', 'p23', 'p24'], count: 2, force: true}] 表示'p22', 'p23', 'p24' 参数三选二
@@ -145,8 +162,8 @@ Valparams.prototype.setParams = function(req, params, options) {
  * @param {string[]} options.cases.then 符合 when 条件时，需要必传的参数
  * @param {string[]} options.cases.not  符合 when 条件时，不能接收的参数
  *
- * @returns {{ err: { type:string, err:string[] }, ret: { params:Object, query:Object, body:Object, query:Object, all:Object,
- *                                                          raw: { query:Object, body:Object, params:Object, all:Object } } }}
+ * @returns {{ err: { type:string, err:string[] }, ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, all:Object,
+ *                                                          raw: { query:Object, body:Object, params:Object, headers:Object, cookies:Object, all:Object } } }}
  */
 Valparams.setParams = function(req, params, options) {
   let validate = params;
@@ -161,7 +178,13 @@ Valparams.setParams = function(req, params, options) {
  * static setParamsAsync
  *
  * @param {Object} req
- * @param {Object.<string, {alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
+ * @param {string} req.method 请求方法
+ * @param {Object} [req.params]  params
+ * @param {Object} [req.query]   query
+ * @param {Object} [req.body]    body
+ * @param {Object} [req.headers] headers
+ * @param {Object} [req.cookies] cookies
+ * @param {Object.<string, {from:string, alias:string, type:string, required:boolean, range: {in: Array, min, max, reg:RegExp, schema},
  *                defValue, trim:boolean, allowEmptyStr:boolean, allowNull:boolean, desc:string}>} params 参数配置  {@link ParamsConfig}
  * @param {Object}  options 参数之间关系配置
  * @param {Object[]} options.choices 参数挑选规则 | [{fields: ['p22', 'p23', 'p24'], count: 2, force: true}] 表示'p22', 'p23', 'p24' 参数三选二
@@ -178,8 +201,8 @@ Valparams.setParams = function(req, params, options) {
  * @param {string[]} options.cases.then 符合 when 条件时，需要必传的参数
  * @param {string[]} options.cases.not  符合 when 条件时，不能接收的参数
  *
- * @returns {{ err: { type:string, err:string[] }, ret: { params:Object, query:Object, body:Object, query:Object, all:Object,
- *                                                          raw: { query:Object, body:Object, params:Object, all:Object } } }}
+ * @returns {{ err: { type:string, err:string[] }, ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, all:Object,
+ *                                                          raw: { query:Object, body:Object, params:Object, headers:Object, cookies:Object, all:Object } } }}
  */
 Valparams.setParamsAsync = function(req, params, options) {
   let validate = params;
