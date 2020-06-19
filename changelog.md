@@ -1,5 +1,10 @@
 # 更新记录
 
+## 3.13.1
+>
+> 修正参数间关系 `case` 条件判断的 `value` 处理 `bug`。（当 `value = false` 时判断处理有误）
+> 
+
 ## 3.13.0
 >
 > `cookies` 增加 `signed` 的区分， 即分为 `cookies` 和 `signedCookies`
