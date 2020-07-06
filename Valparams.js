@@ -167,7 +167,7 @@ Valparams.prototype.setParams = function(req, params, options) {
  * @param {string[]} options.cases.then 符合 when 条件时，需要必传的参数
  * @param {string[]} options.cases.not  符合 when 条件时，不能接收的参数
  *
- * @returns {{ err: { type:string, err:string[] }, ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object,
+ * @returns {{ err: { type:string, err:string[] }[], ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object,
  *                                                          raw: { query:Object, body:Object, params:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object } } }}
  */
 Valparams.setParams = function(req, params, options) {
@@ -207,7 +207,7 @@ Valparams.setParams = function(req, params, options) {
  * @param {string[]} options.cases.then 符合 when 条件时，需要必传的参数
  * @param {string[]} options.cases.not  符合 when 条件时，不能接收的参数
  *
- * @returns {{ err: { type:string, err:string[] }, ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object,
+ * @returns {{ err: { type:string, err:string[] }[], ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object,
  *                                                          raw: { query:Object, body:Object, params:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object } } }}
  */
 Valparams.setParamsAsync = function(req, params, options) {

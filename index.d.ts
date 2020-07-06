@@ -73,7 +73,7 @@ declare class Valparams {
    * @param {string[]} options.cases.then 符合 when 条件时，需要必传的参数
    * @param {string[]} options.cases.not  符合 when 条件时，不能接收的参数
    *
-   * @returns {{ err: { type:string, err:string[] }, ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object,
+   * @returns {{ err: { type:string, err:string[] }[], ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object,
    *                                                          raw: { query:Object, body:Object, params:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object } } }}
    */
   static setParams(req: _Valparams.TRequest, params: _Valparams.TParamConfig, options: _Valparams.TRelationOptions): _Valparams.TResult;
@@ -105,7 +105,7 @@ declare class Valparams {
    * @param {string[]} options.cases.then 符合 when 条件时，需要必传的参数
    * @param {string[]} options.cases.not  符合 when 条件时，不能接收的参数
    *
-   * @returns {{ err: { type:string, err:string[] }, ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object,
+   * @returns {{ err: { type:string, err:string[] }[], ret: { params:Object, query:Object, body:Object, query:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object,
    *                                                          raw: { query:Object, body:Object, params:Object, headers:Object, cookies:Object, signedCookies:Object, all:Object } } }}
    */
   static setParamsAsync(req: _Valparams.TRequest, params: _Valparams.TParamConfig, options: _Valparams.TRelationOptions): _Valparams.TResult;
@@ -227,7 +227,7 @@ declare namespace _Valparams {
     raw: _Valparams.TRawparams;
   }
   export interface TResult {
-    err: _Valparams.TErrorInfo;
+    err: null|_Valparams.TErrorInfo[];
     ret: _Valparams.TValparams;
   }
   export interface TVType {
