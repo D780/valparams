@@ -8,7 +8,7 @@ module.exports = Valparams.defineLocale('zh-cn', {
   em_minmax: opt => {
     const descMap  = { 'length': '长度', 'value': '数值', 'date': '日期', 'address': 'IP地址' };
     const minOpMap = { '>=': '大于等于', '>': '大于' };
-    const maxOpMap = { '<=': '少于等于', '<': '少于' };
+    const maxOpMap = { '<=': '小于等于', '<': '小于' };
     opt.opDesc = descMap[opt.opDesc];
     let minStr;
     if (opt.min && opt.max) {
