@@ -15,7 +15,7 @@
     "dependencies": {
         "ajv": "^6.5.5",
         "lodash": "^4.17.11",
-        "validator": "^10.9.0"
+        "validator": "^13.7.0"
     },
     "devDependencies": {
         "eslint": "^5.2.0",
